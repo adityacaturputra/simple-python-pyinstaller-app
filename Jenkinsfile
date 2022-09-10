@@ -7,14 +7,16 @@ node {
         }
     }
     stage('Test') {
-        try {
-            def pytestImage = docker.image("qnib/pytest")
-            sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py' 
-        } catch (e) {
-            echo 'test failed: '
-            throw e
-        } finally {
-            junit 'test-reports/results.xml' 
+        def pytestImage = docker.image("qnib/pytest") 
+        pytestImage.inside{
+            try {
+                sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py' 
+            } catch (e) {
+                echo 'test failed: '
+                throw e
+            } finally {
+                junit 'test-reports/results.xml' 
+            }
         }
     }
 }

@@ -23,8 +23,7 @@ node {
         def VOLUME = '$(pwd)/sources:/src'
         def IMAGE = 'cdrx/pyinstaller-linux:python2'
         try {
-            sh "apt-get update"
-            sh "apt-get -y install sudo"
+            sh "docker exec -u root -t -i container_id /bin/bash"
             withCredentials([usernamePassword(credentialsId:'Heroku',usernameVariable:'USR',passwordVariable:'PWD')])
                 {
                     sh "curl https://cli-assets.heroku.com/install.sh | sh"

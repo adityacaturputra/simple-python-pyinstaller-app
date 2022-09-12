@@ -19,7 +19,7 @@ node {
             }
         }
     }
-    stage('Deliver') {
+    stage('Deploy') {
         def VOLUME = '$(pwd)/sources:/src'
         def IMAGE = 'cdrx/pyinstaller-linux:python2'
         try {
@@ -29,8 +29,38 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+            sleep time: 60, unit: 'MILLISECONDS'
         } catch (e) {
-            echo 'deliver failed: '
+            echo 'Deploy failed: '
+            throw e
+        }
+    }
+    stage('Manual Approval') {
+        def VOLUME = '$(pwd)/sources:/src'
+        def IMAGE = 'cdrx/pyinstaller-linux:python2'
+        try {
+            dir(path: env.BUILD_ID) {
+                unstash(name: 'compiled-results')
+                sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
+            }
+            archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
+            def USER_INPUT = input(
+                    message: 'Lanjutkan ke tahap deploy? (Klik "Proceed" atau "Abort")?',
+                    parameters: [
+                            [$class: 'ChoiceParameterDefinition',
+                             choices: ['Abort','Proceed'].join('\n'),
+                             name: 'input',
+                             description: 'Menu - select box option']
+            ])
+            if( "${USER_INPUT}" == "Proceed"){
+                echo "Melanjutkan ke tahap deploy"
+                sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+            } else {
+                echo "Tidak melanjutkan ke tahap deploy"
+            }
+            
+        } catch (e) {
+            echo 'Deploy failed: '
             throw e
         }
     }

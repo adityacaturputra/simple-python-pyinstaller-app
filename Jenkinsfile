@@ -29,7 +29,7 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 60, unit: 'MILLISECONDS'
+            sleep time: 60, unit: 'SECONDS'
         } catch (e) {
             echo 'Deploy failed: '
             throw e

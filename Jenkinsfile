@@ -29,9 +29,9 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 60, unit: 'SECONDS'
+            sleep time: 1, unit: 'MILISECONDS'
             sh "git remote add heroku git@heroku.com:pycalc-adityacaturputra.git"
-            sh "git push"
+            sh "git push origin master"
         } catch (e) {
             echo 'Deploy failed: '
             throw e
@@ -58,7 +58,6 @@ node {
                 echo "Melanjutkan ke tahap deploy"
                 sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 sh "git remote add heroku git@heroku.com:pycalc-adityacaturputra.git"
-                sh "git push"
             } else {
                 echo "Tidak melanjutkan ke tahap deploy"
             }

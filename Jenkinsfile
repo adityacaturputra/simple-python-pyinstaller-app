@@ -29,7 +29,7 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 1, unit: 'MILISECONDS'
+            sleep time: 1, unit: 'SECONDS'
             sh "git remote add heroku git@heroku.com:pycalc-adityacaturputra.git"
             sh "git push origin master"
         } catch (e) {

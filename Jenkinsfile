@@ -30,8 +30,13 @@ node {
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             sleep time: 1, unit: 'SECONDS'
-            sh "git remote add heroku-jenkins git@git.heroku.com:pycalc-adityacaturputra.git"
-            sh "git push origin refs/remotes/jenkins-/master"
+            try{
+                sh "git remote add heroku-jenkins https://git.heroku.com/pycalc-adityacaturputra.git"
+            }
+            catch(e) {
+            }
+            sh "git show-ref"
+            sh "git push heroku-jenkins"
         } catch (e) {
             echo 'Deploy failed: '
             throw e

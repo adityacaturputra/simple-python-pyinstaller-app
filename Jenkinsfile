@@ -30,9 +30,7 @@ node {
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             sleep time: 1, unit: 'SECONDS'
-            sh "git show-ref"
-            sh "git push origin HEAD:refs/head/master"
-            sh "git push origin refs/head/master"
+            sh "git push origin refs/remotes/origin/master"
         } catch (e) {
             echo 'Deploy failed: '
             throw e

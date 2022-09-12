@@ -36,7 +36,7 @@ node {
             catch(e) {
             }
             sh "git show-ref"
-            sh "git push heroku-jenkins"
+            sh "git push heroku-jenkins HEAD:master"
         } catch (e) {
             echo 'Deploy failed: '
             throw e

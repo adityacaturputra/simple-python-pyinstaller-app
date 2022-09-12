@@ -23,18 +23,19 @@ node {
         def VOLUME = '$(pwd)/sources:/src'
         def IMAGE = 'cdrx/pyinstaller-linux:python2'
         try {
-            withEnv(['HEROKU=C:\\Progra~1\\heroku\\bin']){
-                withCredentials([usernamePassword(credentialsId:'Heroku',usernameVariable:'USR',passwordVariable:'PWD')])
-                    {
-                        dir(path: env.BUILD_ID) {
-                            unstash(name: 'compiled-results')
-                            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
-                        }
-                        archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
-                        sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-                        sleep time: 60, unit: 'SECONDS'
+            withCredentials([usernamePassword(credentialsId:'Heroku',usernameVariable:'USR',passwordVariable:'PWD')])
+                {
+                    sh "curl https://cli-assets.heroku.com/install.sh | sh"
+                    sh "(echo "${env.USR}" echo "${env.PWD}") | heroku login -i"
+                    dir(path: env.BUILD_ID) {
+                        unstash(name: 'compiled-results')
+                        sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
                     }
-            }
+                    archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
+                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+                    sleep time: 60, unit: 'SECONDS'
+                }
+            
         } catch (e) {
             echo 'Deploy failed: '
             throw e

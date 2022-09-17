@@ -44,6 +44,7 @@ node {
             }
         } catch (e) {
             echo 'Deploy failed: '
+            echo e
             throw e
         }
     }

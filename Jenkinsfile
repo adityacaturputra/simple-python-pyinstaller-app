@@ -30,7 +30,7 @@ node {
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             sleep time: 1, unit: 'SECONDS'
-            def herokuCliImage = docker.image("finalgene/heroku-cli")
+            def herokuCliImage = docker.image("dickeyxxx/heroku-cli")
             herokuCliImage.inside{
                 withCredentials([usernamePassword(credentialsId: '66eeda7f-1794-43a0-ace8-391e7d8acc9b', passwordVariable: 'pass', usernameVariable: 'user')]) {
                     sh "git config --global user.email \"adityacaturputra25@gmail.com\""
@@ -38,7 +38,7 @@ node {
                     sh "heroku git:remote -a https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git"
                     sh "git add ."
                     sh "git commit -m 'reinitialized files'"
-                    sh "git push git push heroku master"
+                    sh "git push heroku master"
                 }
             }
         } catch (e) {

@@ -33,6 +33,8 @@ node {
             def herokuCliImage = docker.image("sue445/heroku-cli")
             herokuCliImage.inside{
                 withCredentials([usernamePassword(credentialsId: '66eeda7f-1794-43a0-ace8-391e7d8acc9b', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    sh "git add ."
+                    sh "git commit -m 'reinitialized files'"
                     def HEROKU_APP_NAME = "pycalc-adityacaturputra"
                     sh "git push https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git master"
                 }

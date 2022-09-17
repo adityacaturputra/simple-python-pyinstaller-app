@@ -38,7 +38,7 @@ node {
                     echo "Dityablast1412"
                     sh "git config --global user.email \"adityacaturputra25@gmail.com\""
                     sh "git config --global user.name \"Aditya Catur Putra\""
-                    sh "heroku git:remote -a https://adityacaturputra:$pass@git.heroku.com/pycalc-adityacaturputra.git"
+                    sh "heroku git:remote -a pycalc-adityacaturputra"
                     sh "git add ."
                     sh "git commit -m 'reinitialized files'"
                     sh "git push heroku master"

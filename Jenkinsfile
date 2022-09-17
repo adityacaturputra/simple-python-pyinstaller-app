@@ -31,7 +31,7 @@ node {
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             sleep time: 1, unit: 'SECONDS'
             withCredentials([sshUserPrivateKey(credentialsId: "13.212.127.93", keyFileVariable: 'keyfile')]) {
-                sh "ssh -i \"${keyfile}\" ubuntu@ec2-13-212-127-93.ap-southeast-1.compute.amazonaws.com"
+                sh "ssh -i ${keyfile} ubuntu@ec2-13-212-127-93.ap-southeast-1.compute.amazonaws.com"
             }
         } catch (e) {
             echo 'Deploy failed: '

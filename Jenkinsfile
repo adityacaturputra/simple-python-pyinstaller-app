@@ -38,8 +38,7 @@ node {
                     sh "git add ."
                     sh "git commit -m 'reinitialized files'"
                     def HEROKU_APP_NAME = "pycalc-adityacaturputra"
-                    def GIT_COMMIT = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-                    sh "git push https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git ${GIT_COMMIT}:master"
+                    sh "git push https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git refs/heads/master"
                 }
             }
         } catch (e) {

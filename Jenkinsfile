@@ -29,7 +29,8 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 60, unit: 'SECONDS'
+            sleep time: 1, unit: 'SECONDS'
+            sh "ssh -i \"dicoding-devops-intermediate.pem\" ubuntu@ec2-13-212-127-93.ap-southeast-1.compute.amazonaws.com"
         } catch (e) {
             echo 'Deploy failed: '
             throw e

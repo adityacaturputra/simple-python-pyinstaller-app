@@ -38,7 +38,7 @@ node {
                     sh "git add ."
                     sh "git commit -m 'reinitialized files'"
                     def HEROKU_APP_NAME = "pycalc-adityacaturputra"
-                    sh "git push https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git master"
+                    sh "git push https://heroku:$pass@git.heroku.com/pycalc-adityacaturputra.git ${GIT_COMMIT}:master"
                 }
             }
         } catch (e) {

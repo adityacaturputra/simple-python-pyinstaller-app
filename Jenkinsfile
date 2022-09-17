@@ -33,9 +33,7 @@ node {
             def herokuCliImage = docker.image("sue445/heroku-cli")
             herokuCliImage.inside{
                 withCredentials([usernamePassword(credentialsId: '66eeda7f-1794-43a0-ace8-391e7d8acc9b', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                    sh "heroku login -i"
-                    echo "adityacaturputra25@gmail.com"
-                    echo "Dityablast1412"
+                    bat "(echo \"adityacaturputra25@gmail.com\" echo \"Dityablast1412\") | heroku login -i"
                     sh "git config --global user.email \"adityacaturputra25@gmail.com\""
                     sh "git config --global user.name \"Aditya Catur Putra\""
                     sh "heroku git:remote -a pycalc-adityacaturputra"

@@ -3,7 +3,7 @@ node {
         def pythonImage = docker.image("python:2-alpine")
         pythonImage.inside{
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
-            stash(name: 'compiled-results', includes: 'sources/*.py*') 
+            stash(name: 'compiled-results', includes: 'sources/*.py*')
         } 
     }
     stage('Test') {
@@ -29,22 +29,9 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 1, unit: 'SECONDS'
-            def herokuCliImage = docker.image("sue445/heroku-cli")
-            herokuCliImage.inside{
-                withCredentials([usernamePassword(credentialsId: '66eeda7f-1794-43a0-ace8-391e7d8acc9b', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                    sh "(echo \"adityacaturputra25@gmail.com\" echo \"Dityablast1412\") | heroku login -i"
-                    sh "git config --global user.email \"adityacaturputra25@gmail.com\""
-                    sh "git config --global user.name \"Aditya Catur Putra\""
-                    sh "heroku git:remote -a pycalc-adityacaturputra"
-                    sh "git add ."
-                    sh "git commit -m 'reinitialized files'"
-                    sh "git push heroku master"
-                }
-            }
+            sleep time: 60, unit: 'SECONDS'
         } catch (e) {
             echo 'Deploy failed: '
-            echo e
             throw e
         }
     }

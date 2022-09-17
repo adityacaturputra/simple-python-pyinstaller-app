@@ -32,7 +32,7 @@ node {
             sleep time: 1, unit: 'SECONDS'
             def herokuCliImage = docker.image("sue445/heroku-cli")
             herokuCliImage.inside{
-                withCredentials([usernamePassword(credentialsId: 'mycompany-github-creds', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                withCredentials([usernamePassword(credentialsId: '66eeda7f-1794-43a0-ace8-391e7d8acc9b', passwordVariable: 'pass', usernameVariable: 'user')]) {
                     def HEROKU_APP_NAME = "pycalc-adityacaturputra"
                     sh "git push https://heroku:$pass@git.heroku.com/${HEROKU_APP_NAME}.git master"
                 }

@@ -1,6 +1,6 @@
 node {
     stage('Build') {
-        def pythonImage = docker.image("python:2-alpine")
+        def pythonImage = docker.image("python:3.9.14-bullseye")
         pythonImage.inside{
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             stash(name: 'compiled-results', includes: 'sources/*.py*')

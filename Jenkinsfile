@@ -30,7 +30,13 @@ node {
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
             sleep time: 1, unit: 'SECONDS'
-            sh "git push jenkins-heroku HEAD:master"
+            def herokuCliImage = docker.image("sue445/heroku-cli")
+            herokuCliImage.inside{
+                withCredentials([usernamePassword(credentialsId: 'mycompany-github-creds', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    def HEROKU_APP_NAME = "pycalc-adityacaturputra"
+                    sh "git push https://heroku:$pass@git.heroku.com/${HEROKU_APP_NAME}.git master"
+                }
+            }
         } catch (e) {
             echo 'Deploy failed: '
             throw e

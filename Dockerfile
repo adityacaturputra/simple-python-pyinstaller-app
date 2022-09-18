@@ -4,4 +4,4 @@ WORKDIR /src
 
 COPY . .
 
-CMD [ "pyinstaller", "-F", "add2vals.py"] 
+CMD [ "pyinstaller", "-F", "add2vals.py"]  

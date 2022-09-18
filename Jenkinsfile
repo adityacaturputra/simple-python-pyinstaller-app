@@ -7,6 +7,7 @@ node {
         // }
         withCredentials([sshUserPrivateKey(credentialsId: "13.212.67.149", keyFileVariable: 'keyfile')]) {
             writeFile file: 'dicoding-devops-intermediate.pem', text: "${keyfile}"
+            sh "chmod 400 dicoding-devops-intermediate.pem"
             sh "ssh -i \"dicoding-devops-intermediate.pem\" ec2-user@ec2-13-212-67-149.ap-southeast-1.compute.amazonaws.com"
             sh "pwd"
         }

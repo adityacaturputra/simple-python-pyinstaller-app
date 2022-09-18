@@ -1,3 +1,5 @@
 build:
   docker:
     web: Dockerfile
+run:
+  web: docker run registry.heroku.com/pycalc-adityacaturputra/web

@@ -15,7 +15,7 @@ node {
         // } 
         def herokuCliImage = docker.image("sue445/heroku-cli")
         herokuCliImage.inside{
-            sh 'echo \"adityacaturputra25@gmail.com\" | echo \"Dityablast1412\" | heroku login -i'
+            sh 'echo Dityablast1412 | echo adityacaturputra25@gmail.com | heroku login -i'
             sh "git config --global user.email \"adityacaturputra25@gmail.com\""
             sh "git config --global user.name \"Aditya Catur Putra\""
             sh "heroku git:remote -a pycalc-adityacaturputra"

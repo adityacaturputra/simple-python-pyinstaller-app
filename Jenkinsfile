@@ -2,7 +2,7 @@ node {
     stage('Try') {
         sshagent(credentials : ['13.212.67.149']){
             sh '''
-                mkdir /home/ec2-user/test
+                pwd
             '''
         }
     }

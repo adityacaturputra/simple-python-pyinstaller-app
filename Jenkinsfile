@@ -29,7 +29,12 @@ node {
             }
             archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
-            sleep time: 60, unit: 'SECONDS'
+            sleep time: 1, unit: 'SECONDS'
+            sshagent(credentials : ['13.212.67.149']){
+                sh ''''
+                    mkdir /home/ec2-user/test
+                '''
+            }
         } catch (e) {
             echo 'Deploy failed: '
             throw e

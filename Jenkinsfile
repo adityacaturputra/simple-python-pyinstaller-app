@@ -5,6 +5,11 @@ node {
                 pwd
             '''
         }
+        withCredentials([sshUserPrivateKey(credentialsId: "yourkeyid", keyFileVariable: 'keyfile')]) {
+            writeFile file: 'dicoding-devops-intermediate.pem', text: "${keyfile}"
+            sh "ssh -i \"dicoding-devops-intermediate.pem\" ec2-user@ec2-13-212-67-149.ap-southeast-1.compute.amazonaws.com"
+            sh "pwd"
+        }
     }
     // stage('Build') {
     //     def pythonImage = docker.image("python:2-alpine")

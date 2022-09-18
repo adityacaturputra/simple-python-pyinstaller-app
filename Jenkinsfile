@@ -7,22 +7,22 @@ node {
         //     ssh user@example.com ...
         // '''
         // }
-        // withCredentials([sshUserPrivateKey(credentialsId: "13.212.67.149", keyFileVariable: 'keyfile')]) {
-        //     writeFile file: 'dicoding-devops-intermediate.pem', text: "${keyfile}"
-        //     sh "chmod 400 dicoding-devops-intermediate.pem"
-        //     sh "ssh -i \"dicoding-devops-intermediate.pem\" ec2-user@ec2-13-212-67-149.ap-southeast-1.compute.amazonaws.com && yes"
-        //     sh "pwd"
-        // } 
-        def herokuCliImage = docker.image("sue445/heroku-cli")
-        herokuCliImage.inside{
-            sh 'echo Dityablast1412 | echo adityacaturputra25@gmail.com | heroku login -i'
-            sh "git config --global user.email \"adityacaturputra25@gmail.com\""
-            sh "git config --global user.name \"Aditya Catur Putra\""
-            sh "heroku git:remote -a pycalc-adityacaturputra"
-            sh "git add ."
-            sh "git commit -m 'reinitialized files'"
-            sh "git push heroku master"
-        }
+        withCredentials([sshUserPrivateKey(credentialsId: "13.212.67.149", keyFileVariable: 'keyfile')]) {
+            writeFile file: 'dicoding-devops-intermediate.pem', text: "${keyfile}"
+            sh "chmod 400 dicoding-devops-intermediate.pem"
+            sh "ssh -i \"dicoding-devops-intermediate.pem\" ec2-user@ec2-13-212-67-149.ap-southeast-1.compute.amazonaws.com && echo yes"
+            sh "pwd"
+        } 
+        // def herokuCliImage = docker.image("sue445/heroku-cli")
+        // herokuCliImage.inside{
+        //     sh 'echo Dityablast1412 | echo adityacaturputra25@gmail.com | heroku login -i'
+        //     sh "git config --global user.email \"adityacaturputra25@gmail.com\""
+        //     sh "git config --global user.name \"Aditya Catur Putra\""
+        //     sh "heroku git:remote -a pycalc-adityacaturputra"
+        //     sh "git add ."
+        //     sh "git commit -m 'reinitialized files'"
+        //     sh "git push heroku master"
+        // }
     }
     // stage('Build') {
     //     def pythonImage = docker.image("python:2-alpine")
